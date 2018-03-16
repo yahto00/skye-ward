@@ -1,8 +1,12 @@
 package com.hydra.skye.ward.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Dozen {
+public class Dozen implements Serializable{
+
+    private static final long serialVersionUID = 5011743832077249589L;
+
     private Long id;
 
     private Long kindId;

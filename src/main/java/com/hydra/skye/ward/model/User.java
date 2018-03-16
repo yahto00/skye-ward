@@ -1,12 +1,20 @@
 package com.hydra.skye.ward.model;
 
-public class User {
+import com.alibaba.fastjson.annotation.JSONField;
+
+import java.io.Serializable;
+
+public class User implements Serializable {
+
+    private static final long serialVersionUID = 2916488747073980722L;
+
     private Long id;
 
     private String username;
 
     private String loginName;
 
+    @JSONField(serialize = false)
     private String password;
 
     public Long getId() {

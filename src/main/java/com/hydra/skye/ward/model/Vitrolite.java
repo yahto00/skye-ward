@@ -1,8 +1,12 @@
 package com.hydra.skye.ward.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Vitrolite {
+public class Vitrolite implements Serializable{
+
+    private static final long serialVersionUID = 8118354423591233445L;
+
     private Long id;
 
     private Long lastOpUserId;

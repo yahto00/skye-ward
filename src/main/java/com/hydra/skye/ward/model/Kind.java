@@ -1,8 +1,12 @@
 package com.hydra.skye.ward.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Kind {
+public class Kind implements Serializable {
+
+    private static final long serialVersionUID = -1526510553122118836L;
+
     private Long id;
 
     private String name;
