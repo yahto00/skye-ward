@@ -68,8 +68,8 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-    id, name, create_at, update_at
-  </sql>
+        id, name, create_at, update_at
+    </sql>
     <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hydra.skye.ward.model.KindExample">
         select
         <if test="distinct">
@@ -91,9 +91,9 @@
         where id = #{id,jdbcType=BIGINT}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from tb_kind
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
+        delete from tb_kind
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
     <delete id="deleteByExample" parameterType="com.hydra.skye.ward.model.KindExample">
         delete from tb_kind
         <if test="_parameter != null">
@@ -101,11 +101,11 @@
         </if>
     </delete>
     <insert id="insert" parameterType="com.hydra.skye.ward.model.Kind">
-    insert into tb_kind (id, name, create_at, 
-      update_at)
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{createAt,jdbcType=TIMESTAMP}, 
-      #{updateAt,jdbcType=TIMESTAMP})
-  </insert>
+        insert into tb_kind (id, name, create_at,
+        update_at)
+        values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{createAt,jdbcType=TIMESTAMP},
+        #{updateAt,jdbcType=TIMESTAMP})
+    </insert>
     <insert id="insertSelective" parameterType="com.hydra.skye.ward.model.Kind">
         insert into tb_kind
         <trim prefix="(" suffix=")" suffixOverrides=",">

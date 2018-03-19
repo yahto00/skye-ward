@@ -30,8 +30,6 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
-    <!-- 静态资源映射 -->
-    <!--<mvc:resources mapping="/static/**" location="/static/"/>-->
     <!--FreeMarker-->
     <!-- freeMarker配置 -->
     <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
@@ -69,6 +67,12 @@
         <property name="allowSessionOverride" value="true"/>
         <property name="allowRequestOverride" value="true"/>
     </bean>
+    <!--启动swagger-->
+    <mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/"/>
+    <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>
+    <context:annotation-config></context:annotation-config>
+    <mvc:annotation-driven></mvc:annotation-driven>
+    <mvc:default-servlet-handler/>
 </beans>
 
 

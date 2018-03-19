@@ -72,8 +72,8 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-    id, last_op_user_id, dozen_id, total_area, price, create_at, update_at, status
-  </sql>
+        id, last_op_user_id, dozen_id, total_area, price, create_at, update_at, status
+    </sql>
     <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hydra.skye.ward.model.VitroliteExample">
         select
         <if test="distinct">
@@ -95,9 +95,9 @@
         where id = #{id,jdbcType=BIGINT}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from tb_vitrolite
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
+        delete from tb_vitrolite
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
     <delete id="deleteByExample" parameterType="com.hydra.skye.ward.model.VitroliteExample">
         delete from tb_vitrolite
         <if test="_parameter != null">
@@ -105,13 +105,13 @@
         </if>
     </delete>
     <insert id="insert" parameterType="com.hydra.skye.ward.model.Vitrolite">
-    insert into tb_vitrolite (id, last_op_user_id, dozen_id, 
-      total_area, price, create_at, 
-      update_at, status)
-    values (#{id,jdbcType=BIGINT}, #{lastOpUserId,jdbcType=BIGINT}, #{dozenId,jdbcType=BIGINT}, 
-      #{totalArea,jdbcType=DOUBLE}, #{price,jdbcType=DOUBLE}, #{createAt,jdbcType=TIMESTAMP}, 
-      #{updateAt,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER})
-  </insert>
+        insert into tb_vitrolite (id, last_op_user_id, dozen_id,
+        total_area, price, create_at,
+        update_at, status)
+        values (#{id,jdbcType=BIGINT}, #{lastOpUserId,jdbcType=BIGINT}, #{dozenId,jdbcType=BIGINT},
+        #{totalArea,jdbcType=DOUBLE}, #{price,jdbcType=DOUBLE}, #{createAt,jdbcType=TIMESTAMP},
+        #{updateAt,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER})
+    </insert>
     <insert id="insertSelective" parameterType="com.hydra.skye.ward.model.Vitrolite">
         insert into tb_vitrolite
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -248,14 +248,14 @@
         where id = #{id,jdbcType=BIGINT}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.hydra.skye.ward.model.Vitrolite">
-    update tb_vitrolite
-    set last_op_user_id = #{lastOpUserId,jdbcType=BIGINT},
-      dozen_id = #{dozenId,jdbcType=BIGINT},
-      total_area = #{totalArea,jdbcType=DOUBLE},
-      price = #{price,jdbcType=DOUBLE},
-      create_at = #{createAt,jdbcType=TIMESTAMP},
-      update_at = #{updateAt,jdbcType=TIMESTAMP},
-      status = #{status,jdbcType=INTEGER}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+        update tb_vitrolite
+        set last_op_user_id = #{lastOpUserId,jdbcType=BIGINT},
+        dozen_id = #{dozenId,jdbcType=BIGINT},
+        total_area = #{totalArea,jdbcType=DOUBLE},
+        price = #{price,jdbcType=DOUBLE},
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+        update_at = #{updateAt,jdbcType=TIMESTAMP},
+        status = #{status,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
 </mapper>

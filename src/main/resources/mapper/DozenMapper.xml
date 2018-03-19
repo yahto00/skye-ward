@@ -75,9 +75,9 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-    id, kind_id, last_op_user_id, number, total_count, left_count, total_area, left_area, 
-    create_at, update_at, status
-  </sql>
+        id, kind_id, last_op_user_id, number, total_count, left_count, total_area, left_area,
+        create_at, update_at, status
+    </sql>
     <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hydra.skye.ward.model.DozenExample">
         select
         <if test="distinct">
@@ -99,9 +99,9 @@
         where id = #{id,jdbcType=BIGINT}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from tb_dozen
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
+        delete from tb_dozen
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
     <delete id="deleteByExample" parameterType="com.hydra.skye.ward.model.DozenExample">
         delete from tb_dozen
         <if test="_parameter != null">
@@ -109,15 +109,15 @@
         </if>
     </delete>
     <insert id="insert" parameterType="com.hydra.skye.ward.model.Dozen">
-    insert into tb_dozen (id, kind_id, last_op_user_id, 
-      number, total_count, left_count, 
-      total_area, left_area, create_at, 
-      update_at, status)
-    values (#{id,jdbcType=BIGINT}, #{kindId,jdbcType=BIGINT}, #{lastOpUserId,jdbcType=BIGINT}, 
-      #{number,jdbcType=VARCHAR}, #{totalCount,jdbcType=INTEGER}, #{leftCount,jdbcType=INTEGER}, 
-      #{totalArea,jdbcType=DOUBLE}, #{leftArea,jdbcType=DOUBLE}, #{createAt,jdbcType=TIMESTAMP}, 
-      #{updateAt,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER})
-  </insert>
+        insert into tb_dozen (id, kind_id, last_op_user_id,
+        number, total_count, left_count,
+        total_area, left_area, create_at,
+        update_at, status)
+        values (#{id,jdbcType=BIGINT}, #{kindId,jdbcType=BIGINT}, #{lastOpUserId,jdbcType=BIGINT},
+        #{number,jdbcType=VARCHAR}, #{totalCount,jdbcType=INTEGER}, #{leftCount,jdbcType=INTEGER},
+        #{totalArea,jdbcType=DOUBLE}, #{leftArea,jdbcType=DOUBLE}, #{createAt,jdbcType=TIMESTAMP},
+        #{updateAt,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER})
+    </insert>
     <insert id="insertSelective" parameterType="com.hydra.skye.ward.model.Dozen">
         insert into tb_dozen
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -292,17 +292,17 @@
         where id = #{id,jdbcType=BIGINT}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.hydra.skye.ward.model.Dozen">
-    update tb_dozen
-    set kind_id = #{kindId,jdbcType=BIGINT},
-      last_op_user_id = #{lastOpUserId,jdbcType=BIGINT},
-      number = #{number,jdbcType=VARCHAR},
-      total_count = #{totalCount,jdbcType=INTEGER},
-      left_count = #{leftCount,jdbcType=INTEGER},
-      total_area = #{totalArea,jdbcType=DOUBLE},
-      left_area = #{leftArea,jdbcType=DOUBLE},
-      create_at = #{createAt,jdbcType=TIMESTAMP},
-      update_at = #{updateAt,jdbcType=TIMESTAMP},
-      status = #{status,jdbcType=INTEGER}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+        update tb_dozen
+        set kind_id = #{kindId,jdbcType=BIGINT},
+        last_op_user_id = #{lastOpUserId,jdbcType=BIGINT},
+        number = #{number,jdbcType=VARCHAR},
+        total_count = #{totalCount,jdbcType=INTEGER},
+        left_count = #{leftCount,jdbcType=INTEGER},
+        total_area = #{totalArea,jdbcType=DOUBLE},
+        left_area = #{leftArea,jdbcType=DOUBLE},
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+        update_at = #{updateAt,jdbcType=TIMESTAMP},
+        status = #{status,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
 </mapper>
