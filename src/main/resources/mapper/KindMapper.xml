@@ -106,8 +106,9 @@
         values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{createAt,jdbcType=TIMESTAMP},
         #{updateAt,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" parameterType="com.hydra.skye.ward.model.Kind">
-        insert into tb_kind
+    <insert id="insertSelective" parameterType="com.hydra.skye.ward.model.Kind"
+            useGeneratedKeys="true" keyProperty="id">
+        insert ignore into tb_kind
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 id,

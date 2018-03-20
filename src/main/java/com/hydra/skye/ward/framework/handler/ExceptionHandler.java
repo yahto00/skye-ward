@@ -2,7 +2,7 @@ package com.hydra.skye.ward.framework.handler;
 
 import com.alibaba.fastjson.JSON;
 import com.hydra.skye.ward.common.exception.BusinessException;
-import com.hydra.skye.ward.model.result.FailResult;
+import com.hydra.skye.ward.model.result.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -33,9 +33,9 @@ public class ExceptionHandler implements HandlerExceptionResolver {
                 writer = response.getWriter();
                 response.setContentType("text/html;charset=UTF-8");
                 if (ex instanceof BusinessException) {
-                    writer.print(JSON.toJSONString(new FailResult(ex.getMessage())));
+                    writer.print(JSON.toJSONString(Result.exception(ex.getMessage())));
                 } else {
-                    writer.print(JSON.toJSONString(new FailResult("未知错误")));
+                    writer.print(JSON.toJSONString(Result.exception("未知错误")));
                 }
                 writer.flush();
             } catch (IOException e) {

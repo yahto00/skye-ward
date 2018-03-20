@@ -69,10 +69,8 @@
     </bean>
     <!--启动swagger-->
     <mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/"/>
+    <mvc:resources mapping="/error/**" location="error/**"/>
     <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>
-    <context:annotation-config></context:annotation-config>
-    <mvc:annotation-driven></mvc:annotation-driven>
-    <mvc:default-servlet-handler/>
 </beans>
 
 

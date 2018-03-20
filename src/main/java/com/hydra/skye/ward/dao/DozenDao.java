@@ -2,6 +2,8 @@ package com.hydra.skye.ward.dao;
 
 import com.hydra.skye.ward.model.Dozen;
 import com.hydra.skye.ward.model.DozenExample;
+import com.hydra.skye.ward.model.condition.DozenQueryCondition;
+import com.hydra.skye.ward.model.vo.DozenVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -30,4 +32,6 @@ public interface DozenDao {
     int updateByPrimaryKeySelective(Dozen record);
 
     int updateByPrimaryKey(Dozen record);
+
+    List<DozenVo> queryDozenByCondition(@Param("condition") DozenQueryCondition condition);
 }

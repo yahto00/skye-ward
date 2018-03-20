@@ -14,6 +14,18 @@
         <result column="update_at" property="updateAt" jdbcType="TIMESTAMP"/>
         <result column="status" property="status" jdbcType="INTEGER"/>
     </resultMap>
+    <resultMap id="DozenVoMap" type="com.hydra.skye.ward.model.vo.DozenVo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="number" property="number" jdbcType="VARCHAR"/>
+        <result column="total_count" property="totalCount" jdbcType="INTEGER"/>
+        <result column="left_count" property="leftCount" jdbcType="INTEGER"/>
+        <result column="total_area" property="totalArea" jdbcType="DOUBLE"/>
+        <result column="left_area" property="leftArea" jdbcType="DOUBLE"/>
+        <result column="create_at" property="createAt" jdbcType="TIMESTAMP"/>
+        <result column="update_at" property="updateAt" jdbcType="TIMESTAMP"/>
+        <result column="username" property="opUserName" jdbcType="VARCHAR"/>
+        <result column="name" property="kindName" jdbcType="VARCHAR"/>
+    </resultMap>
     <sql id="Example_Where_Clause">
         <where>
             <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -92,6 +104,25 @@
             order by ${orderByClause}
         </if>
     </select>
+    <select id="queryDozenByCondition" resultMap="DozenVoMap">
+        SELECT
+        d.id,d.number,d.total_count,d.left_count,d.total_area,d.left_area,d.create_at,d.update_at,u.username,k.name
+        FROM tb_dozen d LEFT JOIN tb_user u ON d.last_op_user_id = u.id
+        LEFT JOIN tb_kind k on d.kind_id = k.id WHERE d.status=0
+        <if test="condition.createAt != null">
+            AND d.create_at &gt;= #{condition.createAt}
+        </if>
+        <if test="condition.kindName != null and condition.kindName!=''">
+            AND k.name LIKE concat("%",#{condition.kindName},"%")
+        </if>
+        <if test="condition.username != null and condition.username != ''">
+            AND u.username LIKE concat("%",#{condition.username},"%")
+        </if>
+        <if test="condition.number != null and condition.number != ''">
+            AND u.number LIKE concat("%",#{condition.number},"%")
+        </if>
+        ORDER BY d.create_at DESC
+    </select>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
         select
         <include refid="Base_Column_List"/>
@@ -109,7 +140,7 @@
         </if>
     </delete>
     <insert id="insert" parameterType="com.hydra.skye.ward.model.Dozen">
-        insert into tb_dozen (id, kind_id, last_op_user_id,
+        insert ignore into tb_dozen (id, kind_id, last_op_user_id,
         number, total_count, left_count,
         total_area, left_area, create_at,
         update_at, status)
@@ -118,8 +149,9 @@
         #{totalArea,jdbcType=DOUBLE}, #{leftArea,jdbcType=DOUBLE}, #{createAt,jdbcType=TIMESTAMP},
         #{updateAt,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER})
     </insert>
-    <insert id="insertSelective" parameterType="com.hydra.skye.ward.model.Dozen">
-        insert into tb_dozen
+    <insert id="insertSelective" parameterType="com.hydra.skye.ward.model.Dozen"
+            useGeneratedKeys="true" keyProperty="id">
+        insert ignore into tb_dozen
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 id,
