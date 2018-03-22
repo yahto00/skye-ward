@@ -1,6 +1,7 @@
 package com.hydra.skye.ward.web;
 
 import com.google.common.base.Preconditions;
+import com.hydra.skye.ward.common.enums.DataCode;
 import com.hydra.skye.ward.model.User;
 import com.hydra.skye.ward.model.result.Result;
 import com.hydra.skye.ward.service.UserService;
@@ -54,11 +55,11 @@ public class AdminController {
                                  HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute("current_user");
         if (user == null) {
-            return Result.unlogin();
+            return new Result().fail("用户未登录", DataCode.NOLOGIN);
         }
         if (!userService.updatePassword(user, PasswordUtil.encrypt(newPassword))) {
-            return Result.fail("修改密码失败");
+            return new Result().fail("修改密码失败", DataCode.DATABASEERROR);
         }
-        return Result.success();
+        return new Result().success();
     }
 }

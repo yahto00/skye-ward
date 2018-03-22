@@ -3,15 +3,17 @@ package com.hydra.skye.ward.model;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Vitrolite implements Serializable {
+public class Cargo implements Serializable {
 
-    private static final long serialVersionUID = 8118354423591233445L;
+    private static final long serialVersionUID = 8160396719347033305L;
 
     private Long id;
 
     private Long lastOpUserId;
 
     private Long dozenId;
+
+    private Integer count;
 
     private Double totalArea;
 
@@ -45,6 +47,14 @@ public class Vitrolite implements Serializable {
 
     public void setDozenId(Long dozenId) {
         this.dozenId = dozenId;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
     }
 
     public Double getTotalArea() {

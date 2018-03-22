@@ -1,5 +1,6 @@
 package com.hydra.skye.ward.web;
 
+import com.hydra.skye.ward.common.enums.DataCode;
 import com.hydra.skye.ward.model.Kind;
 import com.hydra.skye.ward.model.result.Result;
 import com.hydra.skye.ward.service.KindService;
@@ -38,9 +39,9 @@ public class KindController {
         kind.setCreateAt(new Date());
         kind.setUpdateAt(new Date());
         if (!kindService.createKind(kind)) {
-            return Result.fail("添加失败");
+            return new Result().fail("添加失败", DataCode.DATABASEERROR);
         }
-        return Result.success();
+        return new Result().success();
     }
 
 }

@@ -1,5 +1,6 @@
 package com.hydra.skye.ward.service.impl;
 
+import com.hydra.skye.ward.common.enums.DataCode;
 import com.hydra.skye.ward.dao.UserDao;
 import com.hydra.skye.ward.model.User;
 import com.hydra.skye.ward.model.UserExample;
@@ -26,14 +27,14 @@ public class UserServiceImpl implements UserService {
         example.createCriteria().andLoginNameEqualTo(loginName);
         List<User> userList = userDao.selectByExample(example);
         if (CollectionUtils.isEmpty(userList)) {
-            return Result.fail("用户不存在");
+            return new Result().fail("用户不存在", DataCode.SERVICEERROR);
         }
         User user = userList.get(0);
         if (!password.equals(user.getPassword())) {
-            return Result.fail("密码错误");
+            return new Result().fail("密码错误", DataCode.SERVICEERROR);
         }
         request.getSession().setAttribute("current_user", user);
-        return Result.success().addData("user", user);
+        return new Result().success().add("user", user);
     }
 
     @Override

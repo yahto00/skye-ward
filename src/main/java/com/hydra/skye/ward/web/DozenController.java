@@ -1,5 +1,9 @@
 package com.hydra.skye.ward.web;
 
+import com.google.common.base.Preconditions;
+import com.hydra.skye.ward.common.enums.DataCode;
+import com.hydra.skye.ward.common.exception.BusinessException;
+import com.hydra.skye.ward.model.Cargo;
 import com.hydra.skye.ward.model.Dozen;
 import com.hydra.skye.ward.model.PageBean;
 import com.hydra.skye.ward.model.condition.DozenQueryCondition;
@@ -61,9 +65,9 @@ public class DozenController {
         dozen.setTotalCount(totalCount);
         dozen.setNumber(UUID.randomUUID().toString().replace("-", ""));
         if (!dozenService.createDozen(dozen)) {
-            return Result.fail("创建失败");
+            return new Result().fail("创建失败", DataCode.DATABASEERROR);
         }
-        return Result.success();
+        return new Result().success();
     }
 
     @RequestMapping(value = "/queryDozenByCondition.ajax", method = RequestMethod.POST)
@@ -77,6 +81,46 @@ public class DozenController {
     })
     public Result queryDozenByCondition(DozenQueryCondition condition, PageBean pageBean) {
         List<DozenVo> voList = dozenService.queryDozenByCondition(condition, pageBean);
-        return Result.success().addData("voList", voList).addData("page", pageBean);
+        return new Result().success().add("voList", voList).add("page", pageBean);
+    }
+
+    @RequestMapping(value = "/stockOut.ajax", method = RequestMethod.POST)
+    @ResponseBody
+    @ApiOperation(value = "出库", notes = "出库", response = Result.class)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "dozenId", value = "扎ID", dataType = "Long", required = true, paramType = "query"),
+            @ApiImplicitParam(name = "outCount", value = "出库片数", dataType = "Integer", required = true, paramType = "query"),
+            @ApiImplicitParam(name = "outArea", value = "出库面积", dataType = "Double", required = true, paramType = "query"),
+            @ApiImplicitParam(name = "price", value = "出库总价格", dataType = "Double", required = true, paramType = "query")
+    })
+    public Result stockOut(@RequestParam("dozenId") Long dozenId,
+                           @RequestParam("outCount") Integer outCount,
+                           @RequestParam("outArea") Double outArea,
+                           @RequestParam("price") Double price,
+                           HttpServletRequest request) {
+        Preconditions.checkNotNull(dozenId);
+        Preconditions.checkNotNull(outCount);
+        Preconditions.checkNotNull(outArea);
+        Preconditions.checkNotNull(price);
+//        User user = (User) request.getSession().getAttribute("current_user");
+//        if (user == null) {
+//            return new Result().fail("未登录", DataCode.NOLOGIN);
+//        }
+        Cargo cargo = new Cargo();
+        cargo.setCount(outCount);
+        cargo.setCreateAt(new Date());
+        cargo.setTotalArea(outArea);
+        cargo.setPrice(price);
+//        cargo.setLastOpUserId(user.getId());
+        cargo.setLastOpUserId(1L);
+        cargo.setDozenId(dozenId);
+        cargo.setUpdateAt(new Date());
+        cargo.setStatus(0);
+        try {
+            dozenService.stockOut(cargo);
+        } catch (BusinessException e) {
+            return new Result().fail(e.getMessage(), DataCode.SERVICEERROR);
+        }
+        return new Result().success();
     }
 }

@@ -119,7 +119,7 @@
             AND u.username LIKE concat("%",#{condition.username},"%")
         </if>
         <if test="condition.number != null and condition.number != ''">
-            AND u.number LIKE concat("%",#{condition.number},"%")
+            AND d.number LIKE concat("%",#{condition.number},"%")
         </if>
         ORDER BY d.create_at DESC
     </select>
@@ -322,6 +322,22 @@
             </if>
         </set>
         where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="stockOut">
+        UPDATE tb_dozen d
+        SET d.left_count = d.left_count - #{cargo.count,jdbcType=INTEGER},
+        d.left_area = d.left_area - #{cargo.totalArea,jdbcType=DOUBLE},
+        d.update_at = #{updateAt,jdbcType=TIMESTAMP}
+        WHERE d.id = #{cargo.dozenId,jdbcType=BIGINT}
+        AND d.left_count &gt;= #{cargo.count,jdbcType=INTEGER}
+        AND d.left_area &gt;= #{cargo.totalArea,jdbcType=DOUBLE}
+    </update>
+    <update id="stockBack">
+        UPDATE tb_dozen d
+        SET d.left_count = d.left_count + #{backNum,jdbcType=INTEGER},
+        d.left_area = d.left_area + #{backArea,jdbcType=DOUBLE},
+        d.update_at = #{updateAt,jdbcType=TIMESTAMP}
+        WHERE d.id = #{dozenId,jdbcType=BIGINT}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.hydra.skye.ward.model.Dozen">
         update tb_dozen

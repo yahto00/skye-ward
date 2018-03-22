@@ -26,16 +26,16 @@ public class ExceptionHandler implements HandlerExceptionResolver {
         LOGGER.error("", ex);
         ModelAndView mv = null;
         PrintWriter writer = null;
-        if (request.getRequestURI().startsWith("/certificate-center/index")) {
+        if (request.getRequestURI().startsWith("/skye-ward/index")) {
             mv = new ModelAndView("error");
         } else if (request.getRequestURI().endsWith(".ajax")) {
             try {
                 writer = response.getWriter();
                 response.setContentType("text/html;charset=UTF-8");
                 if (ex instanceof BusinessException) {
-                    writer.print(JSON.toJSONString(Result.exception(ex.getMessage())));
+                    writer.print(JSON.toJSONString(new Result().exception(ex.getMessage(), ex)));
                 } else {
-                    writer.print(JSON.toJSONString(Result.exception("未知错误")));
+                    writer.print(JSON.toJSONString(new Result().exception("未知错误", ex)));
                 }
                 writer.flush();
             } catch (IOException e) {
