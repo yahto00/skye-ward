@@ -12,6 +12,17 @@
         <result column="update_at" property="updateAt" jdbcType="TIMESTAMP"/>
         <result column="status" property="status" jdbcType="INTEGER"/>
     </resultMap>
+    <resultMap id="CargoVoMap" type="com.hydra.skye.ward.model.vo.CargoVo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="dozen_id" property="dozenId" jdbcType="BIGINT"/>
+        <result column="count" property="count" jdbcType="INTEGER"/>
+        <result column="total_area" property="totalArea" jdbcType="DOUBLE"/>
+        <result column="price" property="price" jdbcType="DOUBLE"/>
+        <result column="create_at" property="createAt" jdbcType="TIMESTAMP"/>
+        <result column="update_at" property="updateAt" jdbcType="TIMESTAMP"/>
+        <result column="username" property="opUserName" jdbcType="VARCHAR"/>
+        <result column="name" property="kindName" jdbcType="VARCHAR"/>
+    </resultMap>
     <sql id="Example_Where_Clause">
         <where>
             <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -94,6 +105,25 @@
         <include refid="Base_Column_List"/>
         from tb_cargo
         where id = #{id,jdbcType=BIGINT}
+    </select>
+    <select id="queryCargoByCondition" resultMap="CargoVoMap">
+        SELECT tc.id,tc.dozen_id,tc.count,tc.total_area,tc.price,tc.create_at,tc.update_at,u.username,k.name
+        FROM tb_cargo tc LEFT JOIN tb_user u ON tc.last_op_user_id = u.id
+        LEFT JOIN tb_dozen td ON tc.dozen_id = td.id
+        LEFT JOIN tb_kind k on td.kind_id = k.id WHERE tc.status=0
+        <if test="condition.createAt != null">
+            AND tc.create_at &gt;= #{condition.createAt}
+        </if>
+        <if test="condition.kindName != null and condition.kindName!=''">
+            AND k.name LIKE concat("%",#{condition.kindName},"%")
+        </if>
+        <if test="condition.count != null">
+            AND tc.count &gt;= #{condition.count}
+        </if>
+        <if test="condition.price != null">
+            AND tc.price &gt;= #{condition.price}
+        </if>
+        ORDER BY tc.create_at DESC
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from tb_cargo
@@ -271,6 +301,15 @@
         WHERE tc.id=#{cargoId,jdbcType=BIGINT}
         AND tc.total_area &gt; #{backArea,jdbcType=DOUBLE}
         AND tc.count &gt; #{backNum,jdbcType=INTEGER}
+    </update>
+    <update id="oldStockOut">
+        UPDATE tb_cargo tc
+        SET tc.total_area = tc.total_area - #{cargo.totalArea,jdbcType=DOUBLE},
+        tc.count = tc.count - #{cargo.count,jdbcType=INTEGER},
+        tc.update_at = #{updateAt,jdbcType=TIMESTAMP}
+        WHERE tc.id = #{cargo.id,jdbcType=BIGINT}
+        AND tc.total_area &gt;= #{cargo.totalArea,jdbcType=DOUBLE}
+        AND tc.count &gt;= #{cargo.count,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.hydra.skye.ward.model.Cargo">
     update tb_cargo

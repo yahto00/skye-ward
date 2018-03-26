@@ -7,6 +7,7 @@ import com.hydra.skye.ward.common.exception.BusinessException;
 import com.hydra.skye.ward.dao.DozenDao;
 import com.hydra.skye.ward.model.Cargo;
 import com.hydra.skye.ward.model.Dozen;
+import com.hydra.skye.ward.model.DozenExample;
 import com.hydra.skye.ward.model.PageBean;
 import com.hydra.skye.ward.model.condition.DozenQueryCondition;
 import com.hydra.skye.ward.model.vo.DozenVo;
@@ -61,6 +62,26 @@ public class DozenServiceImpl implements DozenService {
     @Override
     public boolean stockBack(Long dozenId, Integer backNum, Double backArea) {
         return dozenDao.stockBack(dozenId, backNum, backArea, new Date()) > 0 ? true : false;
+    }
+
+    @Transactional
+    @Override
+    public void oldStockOut(Cargo cargo) {
+        if (!cargoService.oldStockOut(cargo)) {
+            throw new BusinessException("返库板材出库失败,请检查是否填写数据不规则");
+        }
+        if (!stockBack(cargo.getDozenId(),cargo.getCount(),cargo.getTotalArea())){
+            throw new BusinessException("返库板材出库失败,请检查是否填写数据不规则");
+        }
+        cargo.setId(null);
+        if (!cargoService.createCargo(cargo)) {
+            throw new BusinessException("出库失败");
+        }
+    }
+
+    @Override
+    public int clear() {
+        return dozenDao.clear();
     }
 
 }

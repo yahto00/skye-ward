@@ -1,7 +1,11 @@
 package com.hydra.skye.ward.model.vo;
 
+import com.hydra.skye.ward.model.Cargo;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by yahto on 20/03/2018
@@ -29,6 +33,8 @@ public class DozenVo implements Serializable {
     private String kindName;
 
     private Date updateAt;
+
+    private List<Cargo> backCargoList;
 
     public Long getId() {
         return id;
@@ -108,5 +114,13 @@ public class DozenVo implements Serializable {
 
     public void setUpdateAt(Date updateAt) {
         this.updateAt = updateAt;
+    }
+
+    public List<Cargo> getBackCargoList() {
+        return backCargoList;
+    }
+
+    public void setBackCargoList(List<Cargo> backCargoList) {
+        this.backCargoList = backCargoList;
     }
 }

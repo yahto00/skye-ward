@@ -19,4 +19,8 @@ public interface DozenService {
     void stockOut(Cargo cargo);
 
     boolean stockBack(Long dozenId, Integer backNum, Double backArea);
+
+    void oldStockOut(Cargo cargo);
+
+    int clear();
 }

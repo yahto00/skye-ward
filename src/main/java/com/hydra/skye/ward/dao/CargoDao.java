@@ -2,6 +2,8 @@ package com.hydra.skye.ward.dao;
 
 import com.hydra.skye.ward.model.Cargo;
 import com.hydra.skye.ward.model.CargoExample;
+import com.hydra.skye.ward.model.condition.CargoQueryCondition;
+import com.hydra.skye.ward.model.vo.CargoVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -36,4 +38,9 @@ public interface CargoDao {
                   @Param("backNum") Integer backNum,
                   @Param("backArea") Double backArea,
                   @Param("updateAt") Date updateAt);
+
+    int oldStockOut(@Param("cargo") Cargo cargo,
+                    @Param("updateAt") Date updateAt);
+
+    List<CargoVo> queryCargoByCondition(@Param("condition") CargoQueryCondition cargoQueryCondition);
 }

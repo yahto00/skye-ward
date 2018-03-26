@@ -9,6 +9,7 @@ import com.hydra.skye.ward.model.PageBean;
 import com.hydra.skye.ward.model.condition.DozenQueryCondition;
 import com.hydra.skye.ward.model.result.Result;
 import com.hydra.skye.ward.model.vo.DozenVo;
+import com.hydra.skye.ward.service.CargoService;
 import com.hydra.skye.ward.service.DozenService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -16,6 +17,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,6 +37,8 @@ import java.util.UUID;
 public class DozenController {
     @Autowired
     private DozenService dozenService;
+    @Autowired
+    private CargoService cargoService;
 
     @RequestMapping(value = "/createDozen.ajax", method = RequestMethod.POST)
     @ResponseBody
@@ -81,12 +85,17 @@ public class DozenController {
     })
     public Result queryDozenByCondition(DozenQueryCondition condition, PageBean pageBean) {
         List<DozenVo> voList = dozenService.queryDozenByCondition(condition, pageBean);
+        if (!CollectionUtils.isEmpty(voList)) {
+            for (DozenVo dozenVo : voList) {
+                dozenVo.setBackCargoList(cargoService.queryBackCargoByDozenId(dozenVo.getId()));
+            }
+        }
         return new Result().success().add("voList", voList).add("page", pageBean);
     }
 
     @RequestMapping(value = "/stockOut.ajax", method = RequestMethod.POST)
     @ResponseBody
-    @ApiOperation(value = "出库", notes = "出库", response = Result.class)
+    @ApiOperation(value = "原材料出库", notes = "原材料出库", response = Result.class)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "dozenId", value = "扎ID", dataType = "Long", required = true, paramType = "query"),
             @ApiImplicitParam(name = "outCount", value = "出库片数", dataType = "Integer", required = true, paramType = "query"),
@@ -118,6 +127,50 @@ public class DozenController {
         cargo.setStatus(0);
         try {
             dozenService.stockOut(cargo);
+        } catch (BusinessException e) {
+            return new Result().fail(e.getMessage(), DataCode.SERVICEERROR);
+        }
+        return new Result().success();
+    }
+
+    @RequestMapping(value = "/oldStockOut.ajax", method = RequestMethod.POST)
+    @ResponseBody
+    @ApiOperation(value = "返库板材出库", notes = "返库板材出库", response = Result.class)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "dozenId", value = "扎ID", dataType = "Long", required = true, paramType = "query"),
+            @ApiImplicitParam(name = "cargoId", value = "板材ID", dataType = "Long", required = true, paramType = "query"),
+            @ApiImplicitParam(name = "outCount", value = "出库片数", dataType = "Integer", required = true, paramType = "query"),
+            @ApiImplicitParam(name = "outArea", value = "出库面积", dataType = "Double", required = true, paramType = "query"),
+            @ApiImplicitParam(name = "price", value = "出库总价格", dataType = "Double", required = true, paramType = "query")
+    })
+    public Result oldStockOut(@RequestParam("dozenId") Long dozenId,
+                              @RequestParam("cargoId") Long cargoId,
+                              @RequestParam("outCount") Integer outCount,
+                              @RequestParam("outArea") Double outArea,
+                              @RequestParam("price") Double price,
+                              HttpServletRequest request) {
+        Preconditions.checkNotNull(cargoId);
+        Preconditions.checkNotNull(outArea);
+        Preconditions.checkNotNull(outCount);
+        Preconditions.checkNotNull(dozenId);
+        Preconditions.checkNotNull(price);
+//        User user = (User) request.getSession().getAttribute("current_user");
+//        if (user == null) {
+//            return new Result().fail("未登录", DataCode.NOLOGIN);
+//        }
+        Cargo cargo = new Cargo();
+        cargo.setCount(outCount);
+        cargo.setId(cargoId);
+        cargo.setCreateAt(new Date());
+        cargo.setTotalArea(outArea);
+        cargo.setPrice(price);
+//        cargo.setLastOpUserId(user.getId());
+        cargo.setLastOpUserId(1L);
+        cargo.setDozenId(dozenId);
+        cargo.setUpdateAt(new Date());
+        cargo.setStatus(0);
+        try {
+            dozenService.oldStockOut(cargo);
         } catch (BusinessException e) {
             return new Result().fail(e.getMessage(), DataCode.SERVICEERROR);
         }

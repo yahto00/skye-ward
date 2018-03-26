@@ -43,4 +43,6 @@ public interface DozenDao {
                   @Param("backNum") Integer backNum,
                   @Param("backArea") Double backArea,
                   @Param("updateAt") Date updateAt);
+
+    int clear();
 }
