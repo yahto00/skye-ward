@@ -3,7 +3,6 @@ package com.hydra.skye.ward.web;
 import com.google.common.base.Preconditions;
 import com.hydra.skye.ward.common.enums.DataCode;
 import com.hydra.skye.ward.common.exception.BusinessException;
-import com.hydra.skye.ward.model.Cargo;
 import com.hydra.skye.ward.model.PageBean;
 import com.hydra.skye.ward.model.condition.CargoQueryCondition;
 import com.hydra.skye.ward.model.result.Result;
@@ -64,7 +63,7 @@ public class CargoController {
     @RequestMapping(value = "/queryCargoByCondition.ajax", method = RequestMethod.POST)
     @ResponseBody
     public Result queryCargoByCondition(CargoQueryCondition cargoQueryCondition, PageBean pageBean) {
-        List<CargoVo> voList = cargoService.queryCargoByCondition(cargoQueryCondition,pageBean);
+        List<CargoVo> voList = cargoService.queryCargoByCondition(cargoQueryCondition, pageBean);
         return new Result().success().add("voList", voList).add("page", pageBean);
     }
 }

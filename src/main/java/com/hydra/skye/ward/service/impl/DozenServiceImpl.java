@@ -70,13 +70,8 @@ public class DozenServiceImpl implements DozenService {
         if (!cargoService.oldStockOut(cargo)) {
             throw new BusinessException("返库板材出库失败,请检查是否填写数据不规则");
         }
-        if (!stockBack(cargo.getDozenId(),cargo.getCount(),cargo.getTotalArea())){
-            throw new BusinessException("返库板材出库失败,请检查是否填写数据不规则");
-        }
         cargo.setId(null);
-        if (!cargoService.createCargo(cargo)) {
-            throw new BusinessException("出库失败");
-        }
+        stockOut(cargo);
     }
 
     @Override
