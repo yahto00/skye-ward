@@ -90,9 +90,28 @@
         from tb_kind
         where id = #{id,jdbcType=BIGINT}
     </select>
+    <select id="queryKindByCondition" resultMap="BaseResultMap">
+        SELECT tk.id,tk.name,tk.create_at,tk.update_at
+        FROM tb_kind tk
+        WHERE 1=1
+        <if test="condition.kindName != null and condition.kindName!=''">
+            AND tk.name LIKE concat("%",#{condition.kindName},"%")
+        </if>
+        <if test="condition.createAt != null">
+            AND tk.create_at &gt;= #{condition.createAt}
+        </if>
+        ORDER BY tk.create_at DESC
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from tb_kind
         where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <delete id="deleteKindById">
+        DELETE FROM tb_kind
+        WHERE id = #{kindId,jdbcType=BIGINT} AND
+        NOT EXISTS(
+          SELECT 1 FROM tb_dozen td WHERE td.kind_id = #{kindId,jdbcType=BIGINT}
+        )
     </delete>
     <delete id="deleteByExample" parameterType="com.hydra.skye.ward.model.KindExample">
         delete from tb_kind
@@ -188,6 +207,12 @@
             </if>
         </set>
         where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateKindById">
+        UPDATE tb_kind
+        SET name = #{name,jdbcType=VARCHAR},
+            update_at = #{updateAt,jdbcType=TIMESTAMP}
+        WHERE id = #{kindId,jdbcType=BIGINT}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.hydra.skye.ward.model.Kind">
         update tb_kind

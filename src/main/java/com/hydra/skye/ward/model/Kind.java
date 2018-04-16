@@ -1,5 +1,7 @@
 package com.hydra.skye.ward.model;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -11,8 +13,10 @@ public class Kind implements Serializable {
 
     private String name;
 
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date createAt;
 
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date updateAt;
 
     public Long getId() {

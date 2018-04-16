@@ -1,5 +1,7 @@
 package com.hydra.skye.ward.model;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -23,8 +25,10 @@ public class Dozen implements Serializable {
 
     private Double leftArea;
 
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date createAt;
 
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date updateAt;
 
     private Integer status;

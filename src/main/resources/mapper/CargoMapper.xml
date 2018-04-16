@@ -111,9 +111,6 @@
         FROM tb_cargo tc LEFT JOIN tb_user u ON tc.last_op_user_id = u.id
         LEFT JOIN tb_dozen td ON tc.dozen_id = td.id
         LEFT JOIN tb_kind k on td.kind_id = k.id WHERE tc.status=0
-        <if test="condition.createAt != null">
-            AND tc.create_at &gt;= #{condition.createAt}
-        </if>
         <if test="condition.kindName != null and condition.kindName!=''">
             AND k.name LIKE concat("%",#{condition.kindName},"%")
         </if>
@@ -122,6 +119,9 @@
         </if>
         <if test="condition.price != null">
             AND tc.price &gt;= #{condition.price}
+        </if>
+        <if test="condition.createAt != null">
+            AND tc.create_at &gt;= #{condition.createAt}
         </if>
         ORDER BY tc.create_at DESC
     </select>

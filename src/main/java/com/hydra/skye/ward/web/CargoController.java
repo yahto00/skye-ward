@@ -62,6 +62,13 @@ public class CargoController {
 
     @RequestMapping(value = "/queryCargoByCondition.ajax", method = RequestMethod.POST)
     @ResponseBody
+    @ApiOperation(value = "条件查询", notes = "条件查询", response = Result.class)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "kindName", value = "种类名称", dataType = "String", required = false, paramType = "query"),
+            @ApiImplicitParam(name = "count", value = "货物数量", dataType = "Integer", required = false, paramType = "query"),
+            @ApiImplicitParam(name = "price", value = "货物价格", dataType = "Double", required = false, paramType = "query"),
+            @ApiImplicitParam(name = "createAt", value = "创建日期", dataType = "Date", required = false, paramType = "query")
+    })
     public Result queryCargoByCondition(CargoQueryCondition cargoQueryCondition, PageBean pageBean) {
         List<CargoVo> voList = cargoService.queryCargoByCondition(cargoQueryCondition, pageBean);
         return new Result().success().add("voList", voList).add("page", pageBean);

@@ -79,4 +79,11 @@ public class DozenServiceImpl implements DozenService {
         return dozenDao.clear();
     }
 
+    @Override
+    public List<Dozen> queryDozenByKindId(Long kindId) {
+        DozenExample example = new DozenExample();
+        example.createCriteria().andKindIdEqualTo(kindId);
+        return dozenDao.selectByExample(example);
+    }
+
 }

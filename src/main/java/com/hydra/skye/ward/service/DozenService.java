@@ -23,4 +23,6 @@ public interface DozenService {
     void oldStockOut(Cargo cargo);
 
     int clear();
+
+    List<Dozen> queryDozenByKindId(Long kindId);
 }
