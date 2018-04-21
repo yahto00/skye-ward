@@ -35,7 +35,7 @@ public class Swagger2Config {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("鑫景盛 RESTful APIs")
+                .title("鑫锦盛 RESTful APIs")
                 .description("鑫景盛 RESTful 风格的接口文档，内容详细，极大的减少了前后端的沟通成本，同时确保代码与文档保持高度一致，极大的减少维护文档的时间。")
                 .termsOfServiceUrl("https://github.com/yahto00/skye-ward")
                 .contact("yahto")

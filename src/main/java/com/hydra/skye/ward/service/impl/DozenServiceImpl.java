@@ -38,9 +38,8 @@ public class DozenServiceImpl implements DozenService {
 
     @Override
     public List<DozenVo> queryDozenByCondition(DozenQueryCondition condition, PageBean pageBean) {
-        Integer limitX = (pageBean.getPageIndex() - 1) * pageBean.getPageSize();
         Integer limitY = pageBean.getPageSize();
-        Page<DozenVo> result = PageHelper.startPage(limitX, limitY);
+        Page<DozenVo> result = PageHelper.startPage(pageBean.getPageIndex(), limitY);
         List<DozenVo> voList = dozenDao.queryDozenByCondition(condition);
         pageBean.setCounts(result.getTotal());
         return voList == null ? Lists.newArrayList() : voList;

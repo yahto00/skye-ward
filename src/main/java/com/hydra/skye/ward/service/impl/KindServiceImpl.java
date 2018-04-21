@@ -7,8 +7,6 @@ import com.hydra.skye.ward.dao.KindDao;
 import com.hydra.skye.ward.model.Kind;
 import com.hydra.skye.ward.model.PageBean;
 import com.hydra.skye.ward.model.condition.KindQueryCondition;
-import com.hydra.skye.ward.service.CargoService;
-import com.hydra.skye.ward.service.DozenService;
 import com.hydra.skye.ward.service.KindService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,12 +22,6 @@ public class KindServiceImpl implements KindService {
     @Autowired
     private KindDao kindDao;
 
-    @Autowired
-    private DozenService dozenService;
-
-    @Autowired
-    private CargoService cargoService;
-
     @Override
     public boolean createKind(Kind kind) {
         return kindDao.insertSelective(kind) > 0 ? true : false;
@@ -37,9 +29,8 @@ public class KindServiceImpl implements KindService {
 
     @Override
     public List<Kind> queryKindByCondition(KindQueryCondition condition, PageBean pageBean) {
-        Integer limitX = (pageBean.getPageIndex() - 1) * pageBean.getPageSize();
         Integer limitY = pageBean.getPageSize();
-        Page<Kind> result = PageHelper.startPage(limitX, limitY);
+        Page<Kind> result = PageHelper.startPage(pageBean.getPageIndex(), limitY);
         List<Kind> kindList = kindDao.queryKindByCondition(condition);
         pageBean.setCounts(result.getTotal());
         return kindList == null ? Lists.newArrayList() : kindList;
