@@ -1,9 +1,9 @@
 package com.hydra.skye.ward.model.vo;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.hydra.skye.ward.model.Cargo;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,12 +26,14 @@ public class DozenVo implements Serializable {
 
     private Double leftArea;
 
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date createAt;
 
     private String opUserName;
 
     private String kindName;
 
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date updateAt;
 
     private List<Cargo> backCargoList;

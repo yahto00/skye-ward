@@ -1,5 +1,7 @@
 package com.hydra.skye.ward.model.vo;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -20,8 +22,10 @@ public class CargoVo implements Serializable {
 
     private Double price;
 
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date createAt;
 
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date updateAt;
 
     private String kindName;

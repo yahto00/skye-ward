@@ -85,9 +85,8 @@ public class CargoServiceImpl implements CargoService {
 
     @Override
     public List<CargoVo> queryCargoByCondition(CargoQueryCondition cargoQueryCondition, PageBean pageBean) {
-        Integer limitX = (pageBean.getPageIndex() - 1) * pageBean.getPageSize();
         Integer limitY = pageBean.getPageSize();
-        Page<CargoVo> result = PageHelper.startPage(limitX, limitY);
+        Page<CargoVo> result = PageHelper.startPage(pageBean.getPageIndex(), limitY);
         List<CargoVo> voList = cargoDao.queryCargoByCondition(cargoQueryCondition);
         pageBean.setCounts(result.getTotal());
         return voList == null ? Lists.newArrayList() : voList;
