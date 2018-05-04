@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -49,5 +50,11 @@ public class UserServiceImpl implements UserService {
             return false;
         }
         return userDao.updatePassword(user.getId(), newPassword) > 0 ? true : false;
+    }
+
+    @Override
+    public List<User> queryAllUser() {
+        List<User> userList = userDao.queryAllUser();
+        return userList == null ? new ArrayList<User>() : userList;
     }
 }

@@ -163,6 +163,10 @@
             <include refid="Example_Where_Clause"/>
         </if>
     </select>
+    <select id="queryAllKind" resultType="com.hydra.skye.ward.model.Kind">
+        select tk.id,tk.name,tk.create_at,tk.update_at
+        from tb_kind tk
+    </select>
     <update id="updateByExampleSelective" parameterType="map">
         update tb_kind
         <set>

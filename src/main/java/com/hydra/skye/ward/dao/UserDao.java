@@ -32,4 +32,6 @@ public interface UserDao {
     int updateByPrimaryKey(User record);
 
     int updatePassword(@Param("id") Long id, @Param("newPassword") String newPassword);
+
+    List<User> queryAllUser();
 }

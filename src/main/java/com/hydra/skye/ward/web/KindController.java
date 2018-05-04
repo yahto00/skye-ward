@@ -91,4 +91,12 @@ public class KindController {
         return new Result().success();
     }
 
+    @RequestMapping(value = "queryAllKind.ajax", method = RequestMethod.POST)
+    @ResponseBody
+    @ApiOperation(value = "更新种类", notes = "更新种类", response = Result.class)
+    public Result queryAllKind() {
+        List<Kind> kindList = kindService.queryAllKind();
+        return new Result().success().add("kindList",kindList);
+    }
+
 }

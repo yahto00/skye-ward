@@ -11,6 +11,7 @@ import com.hydra.skye.ward.service.KindService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -44,5 +45,11 @@ public class KindServiceImpl implements KindService {
     @Override
     public boolean updateKindById(String name, Long kindId) {
         return kindDao.updateKindById(name, kindId, new Date()) > 0 ? true : false;
+    }
+
+    @Override
+    public List<Kind> queryAllKind() {
+        List<Kind> kindList = kindDao.queryAllKind();
+        return kindList == null ? new ArrayList<Kind>() : kindList;
     }
 }

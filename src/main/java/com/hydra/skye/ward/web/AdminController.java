@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * Created by yahto on 16/03/2018
@@ -61,5 +62,13 @@ public class AdminController {
             return new Result().fail("修改密码失败", DataCode.DATABASEERROR);
         }
         return new Result().success();
+    }
+
+    @RequestMapping(value = "queryAllUser.ajax",method = RequestMethod.POST)
+    @ResponseBody
+    @ApiOperation(value = "查询所有用户", notes = "查询所有用户", response = Result.class)
+    public Result queryAllUser(){
+        List<User> userList = userService.queryAllUser();
+        return new Result().success().add("userList",userList);
     }
 }

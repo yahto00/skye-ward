@@ -2,6 +2,8 @@ package com.hydra.skye.ward.web;
 
 import com.hydra.skye.ward.common.enums.DataCode;
 import com.hydra.skye.ward.model.Customer;
+import com.hydra.skye.ward.model.PageBean;
+import com.hydra.skye.ward.model.condition.CustomerCondition;
 import com.hydra.skye.ward.model.result.Result;
 import com.hydra.skye.ward.service.CustomerService;
 import io.swagger.annotations.Api;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by yahto on 28/04/2018 12:28 PM
@@ -55,5 +58,19 @@ public class CustomerController {
             return new Result().fail("创建客户信息失败", DataCode.INVALIDERROR);
         }
         return new Result().success();
+    }
+
+    @RequestMapping(value = "queryCustomerByCondition.ajax", method = RequestMethod.POST)
+    @ResponseBody
+    @ApiOperation(value = "条件查询客户信息", notes = "条件查询客户信息", response = Result.class)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "name", value = "客户名称", dataType = "String", required = false, paramType = "query"),
+            @ApiImplicitParam(name = "phone", value = "客户电话", dataType = "String", required = false, paramType = "query"),
+            @ApiImplicitParam(name = "email", value = "客户邮箱", dataType = "String", required = false, paramType = "query"),
+            @ApiImplicitParam(name = "address", value = "客户地址", dataType = "String", required = false, paramType = "query")
+    })
+    public Result queryCustomerByCondition(CustomerCondition customerCondition, PageBean pageBean) {
+        List<Customer> customerList = customerService.queryCustomerByCondition(customerCondition, pageBean);
+        return new Result().success().add("customerList", customerList);
     }
 }

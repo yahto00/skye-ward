@@ -17,4 +17,6 @@ public interface KindService {
     boolean deleteKindById(Long kindId);
 
     boolean updateKindById(String name, Long kindId);
+
+    List<Kind> queryAllKind();
 }

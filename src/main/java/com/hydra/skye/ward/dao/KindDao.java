@@ -40,4 +40,6 @@ public interface KindDao {
     int updateKindById(@Param("name") String name,
                        @Param("kindId") Long kindId,
                        @Param("updateAt") Date updateAt);
+
+    List<Kind> queryAllKind();
 }

@@ -84,6 +84,10 @@
             order by ${orderByClause}
         </if>
     </select>
+    <select id="queryAllUser" resultType="com.hydra.skye.ward.model.User">
+        select tu.id,tu.username,tu.login_name,tu.password
+        from tb_user
+    </select>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
         select
         <include refid="Base_Column_List"/>
