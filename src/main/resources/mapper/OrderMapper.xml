@@ -89,10 +89,10 @@
         from tb_order as o left join tb_customer as tc on o.customer_id = tc.id
         left join tb_user as tu on o.last_op_user_id = tu.id
         where 1=1
-        <if test="condition.customerName != null or condition.customerName !=''">
+        <if test="condition.customerName != null and condition.customerName !=''">
             and tc.name like concat("%",#{condition.customerName},"%")
         </if>
-        <if test="condition.opsUserName != null or condition.opsUserName !=''">
+        <if test="condition.opsUserName != null and condition.opsUserName !=''">
             and tu.username like concat("%",#{condition.opsUserName},"%")
         </if>
         <if test="condition.createAt != null">

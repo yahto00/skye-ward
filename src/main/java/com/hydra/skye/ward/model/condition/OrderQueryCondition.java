@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * Created by yahto on 2018/5/7 3:21 PM
  */
-public class OrderCondition {
+public class OrderQueryCondition {
     private String customerName;
 
     private String opsUserName;

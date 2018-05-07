@@ -8,7 +8,7 @@ import com.hydra.skye.ward.dao.OrderDao;
 import com.hydra.skye.ward.model.Order;
 import com.hydra.skye.ward.model.OrderItem;
 import com.hydra.skye.ward.model.PageBean;
-import com.hydra.skye.ward.model.condition.OrderCondition;
+import com.hydra.skye.ward.model.condition.OrderQueryCondition;
 import com.hydra.skye.ward.model.dto.OrderItemDto;
 import com.hydra.skye.ward.model.vo.OrderVo;
 import com.hydra.skye.ward.service.CargoService;
@@ -60,7 +60,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderVo> queryOrderByCondition(OrderCondition condition, PageBean pageBean) {
+    public List<OrderVo> queryOrderByCondition(OrderQueryCondition condition, PageBean pageBean) {
         Integer limitY = pageBean.getPageSize();
         Page<OrderVo> result = PageHelper.startPage(pageBean.getPageIndex(), limitY);
         List<OrderVo> voList = orderDao.queryOrderByCondition(condition);

@@ -1,7 +1,7 @@
 package com.hydra.skye.ward.dao;
 
 import com.hydra.skye.ward.model.Order;
-import com.hydra.skye.ward.model.condition.OrderCondition;
+import com.hydra.skye.ward.model.condition.OrderQueryCondition;
 import com.hydra.skye.ward.model.vo.OrderVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -15,5 +15,5 @@ import java.util.List;
 public interface OrderDao {
     int insertSelective(Order order);
 
-    List<OrderVo> queryOrderByCondition(@Param("condition") OrderCondition condition);
+    List<OrderVo> queryOrderByCondition(@Param("condition") OrderQueryCondition condition);
 }
