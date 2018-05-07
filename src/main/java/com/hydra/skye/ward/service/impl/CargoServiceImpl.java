@@ -9,6 +9,7 @@ import com.hydra.skye.ward.model.Cargo;
 import com.hydra.skye.ward.model.CargoExample;
 import com.hydra.skye.ward.model.PageBean;
 import com.hydra.skye.ward.model.condition.CargoQueryCondition;
+import com.hydra.skye.ward.model.dto.OrderItemDto;
 import com.hydra.skye.ward.model.vo.CargoVo;
 import com.hydra.skye.ward.service.CargoService;
 import com.hydra.skye.ward.service.DozenService;
@@ -90,5 +91,10 @@ public class CargoServiceImpl implements CargoService {
         List<CargoVo> voList = cargoDao.queryCargoByCondition(cargoQueryCondition);
         pageBean.setCounts(result.getTotal());
         return voList == null ? Lists.newArrayList() : voList;
+    }
+
+    @Override
+    public boolean createOrder(OrderItemDto dto) {
+        return cargoDao.createOrder(dto, new Date()) > 0 ? true : false;
     }
 }

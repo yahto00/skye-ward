@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.hydra.skye.ward.model.Cargo;
 import com.hydra.skye.ward.model.PageBean;
 import com.hydra.skye.ward.model.condition.CargoQueryCondition;
+import com.hydra.skye.ward.model.dto.OrderItemDto;
 import com.hydra.skye.ward.model.vo.CargoVo;
 
 import java.util.List;
@@ -23,4 +24,6 @@ public interface CargoService {
     int clear();
 
     List<CargoVo> queryCargoByCondition(CargoQueryCondition cargoQueryCondition, PageBean pageBean);
+
+    boolean createOrder(OrderItemDto dto);
 }

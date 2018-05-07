@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hydra.skye.ward.dao.OrderDao">
+    <resultMap id="BaseResultMap" type="com.hydra.skye.ward.model.Order">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="customer_id" property="customerId" jdbcType="BIGINT"/>
+        <result column="last_op_user_id" property="lastOpUserId" jdbcType="BIGINT"/>
+        <result column="total_price" property="totalPrice" jdbcType="DOUBLE"/>
+        <result column="total_count" property="totalCount" jdbcType="INTEGER"/>
+        <result column="total_area" property="totalArea" jdbcType="DOUBLE"/>
+        <result column="create_at" property="createAt" jdbcType="TIMESTAMP"/>
+        <result column="update_at" property="updateAt" jdbcType="TIMESTAMP"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+    </resultMap>
+    <resultMap id="OrderVoMap" type="com.hydra.skye.ward.model.vo.OrderVo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="customerName" jdbcType="VARCHAR"/>
+        <result column="phone" property="customerPhone" jdbcType="VARCHAR"/>
+        <result column="total_price" property="totalPrice" jdbcType="DOUBLE"/>
+        <result column="total_count" property="totalCount" jdbcType="INTEGER"/>
+        <result column="total_area" property="totalArea" jdbcType="DOUBLE"/>
+        <result column="username" property="opsUserName" jdbcType="VARCHAR"/>
+        <result column="create_at" property="createAt" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <insert id="insertSelective" parameterType="com.hydra.skye.ward.model.Order"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into tb_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="customer_id != null">
+                customer_id,
+            </if>
+            <if test="last_op_user_id != null">
+                last_op_user_id,
+            </if>
+            <if test="total_price != null">
+                total_price,
+            </if>
+            <if test="total_count != null">
+                total_count,
+            </if>
+            <if test="total_area != null">
+                total_area,
+            </if>
+            <if test="create_at != null">
+                create_at,
+            </if>
+            <if test="update_at != null">
+                update_at,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="customer_id != null">
+                #{customerId,jdbcType=BIGINT},
+            </if>
+            <if test="last_op_user_id != null">
+                #{lastOpUserId,jdbcType=BIGINT},
+            </if>
+            <if test="total_price != null">
+                #{totalPrice,jdbcType=DOUBLE},
+            </if>
+            <if test="total_count != null">
+                #{totalCount,jdbcType=INTEGER},
+            </if>
+            <if test="total_area != null">
+                #{totalArea,jdbcType=DOUBLE},
+            </if>
+            <if test="create_at != null">
+                #{createAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="update_at != null">
+                #{updateAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <select id="queryOrderByCondition" resultMap="OrderVoMap">
+        select o.id,o.total_price,o.total_count,o.total_area,o.create_at,tc.name,tc.phone,tu.username
+        from tb_order as o left join tb_customer as tc on o.customer_id = tc.id
+        left join tb_user as tu on o.last_op_user_id = tu.id
+        where 1=1
+        <if test="condition.customerName != null or condition.customerName !=''">
+            and tc.name like concat("%",#{condition.customerName},"%")
+        </if>
+        <if test="condition.opsUserName != null or condition.opsUserName !=''">
+            and tu.username like concat("%",#{condition.opsUserName},"%")
+        </if>
+        <if test="condition.createAt != null">
+            and o.create_at &gt;= #{condition.createAt}
+        </if>
+        <if test="condition.endAt != null">
+            and o.create_at &lt;= #{condition.endAt}
+        </if>
+        order by o.create_at desc
+    </select>
+</mapper>

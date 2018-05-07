@@ -10,6 +10,8 @@ import java.util.Date;
 public class DozenQueryCondition {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createAt;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date endAt;
     private String kindName;
     private String username;
     private String number;
@@ -20,6 +22,14 @@ public class DozenQueryCondition {
 
     public void setCreateAt(Date createAt) {
         this.createAt = createAt;
+    }
+
+    public Date getEndAt() {
+        return endAt;
+    }
+
+    public void setEndAt(Date endAt) {
+        this.endAt = endAt;
     }
 
     public String getKindName() {

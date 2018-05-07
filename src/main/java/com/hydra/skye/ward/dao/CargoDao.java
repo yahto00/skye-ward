@@ -3,6 +3,7 @@ package com.hydra.skye.ward.dao;
 import com.hydra.skye.ward.model.Cargo;
 import com.hydra.skye.ward.model.CargoExample;
 import com.hydra.skye.ward.model.condition.CargoQueryCondition;
+import com.hydra.skye.ward.model.dto.OrderItemDto;
 import com.hydra.skye.ward.model.vo.CargoVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -43,4 +44,6 @@ public interface CargoDao {
                     @Param("updateAt") Date updateAt);
 
     List<CargoVo> queryCargoByCondition(@Param("condition") CargoQueryCondition cargoQueryCondition);
+
+    int createOrder(@Param("dto") OrderItemDto dto, @Param("updateAt") Date updateAt);
 }

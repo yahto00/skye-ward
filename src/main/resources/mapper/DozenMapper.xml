@@ -109,9 +109,6 @@
         d.id,d.number,d.total_count,d.left_count,d.total_area,d.left_area,d.create_at,d.update_at,u.username,k.name
         FROM tb_dozen d LEFT JOIN tb_user u ON d.last_op_user_id = u.id
         LEFT JOIN tb_kind k on d.kind_id = k.id WHERE d.status=0
-        <if test="condition.createAt != null">
-            AND d.create_at &gt;= #{condition.createAt}
-        </if>
         <if test="condition.kindName != null and condition.kindName!=''">
             AND k.name LIKE concat("%",#{condition.kindName},"%")
         </if>
@@ -120,6 +117,12 @@
         </if>
         <if test="condition.number != null and condition.number != ''">
             AND d.number LIKE concat("%",#{condition.number},"%")
+        </if>
+        <if test="condition.createAt != null">
+            AND d.create_at &gt;= #{condition.createAt}
+        </if>
+        <if test="condition.endAt != null">
+            AND d.create_at &lt;= #{condition.endAt}
         </if>
         ORDER BY d.create_at DESC
     </select>

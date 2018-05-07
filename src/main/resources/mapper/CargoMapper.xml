@@ -311,6 +311,15 @@
         AND tc.total_area &gt;= #{cargo.totalArea,jdbcType=DOUBLE}
         AND tc.count &gt;= #{cargo.count,jdbcType=INTEGER}
     </update>
+    <update id="createOrder">
+        UPDATE tb_cargo tc
+        SET tc.total_area = tc.total_area - #{dto.itemArea,jdbcType=DOUBLE},
+        tc.count = tc.count - #{dto.itemCount,jdbcType=INTEGER},
+        tc.update_at = #{updateAt,jdbcType=TIMESTAMP}
+        WHERE tc.id = #{dto.cargoId,jdbcType=BIGINT}
+        AND tc.total_area &gt;= #{dto.itemArea,jdbcType=DOUBLE}
+        AND tc.count &gt;= #{dto.itemCount,jdbcType=INTEGER}
+    </update>
     <update id="updateByPrimaryKey" parameterType="com.hydra.skye.ward.model.Cargo">
     update tb_cargo
     set last_op_user_id = #{lastOpUserId,jdbcType=BIGINT},

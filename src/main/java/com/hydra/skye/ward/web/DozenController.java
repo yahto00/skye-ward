@@ -79,6 +79,7 @@ public class DozenController {
     @ApiOperation(value = "条件查询扎", notes = "条件查询扎", response = Result.class)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "createAt", value = "创建时间", dataType = "Date", required = false, paramType = "query"),
+            @ApiImplicitParam(name = "endAt", value = "查询结束时间", dataType = "Date", required = false, paramType = "query"),
             @ApiImplicitParam(name = "kindName", value = "种类名称", dataType = "String", required = false, paramType = "query"),
             @ApiImplicitParam(name = "username", value = "用户名", dataType = "String", required = false, paramType = "query"),
             @ApiImplicitParam(name = "number", value = "扎编号", dataType = "String", required = false, paramType = "query")
