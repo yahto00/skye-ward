@@ -64,11 +64,11 @@ public class AdminController {
         return new Result().success();
     }
 
-    @RequestMapping(value = "queryAllUser.ajax",method = RequestMethod.POST)
+    @RequestMapping(value = "queryAllUser.ajax", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(value = "查询所有用户", notes = "查询所有用户", response = Result.class)
-    public Result queryAllUser(){
+    public Result queryAllUser() {
         List<User> userList = userService.queryAllUser();
-        return new Result().success().add("userList",userList);
+        return new Result().success().add("userList", userList);
     }
 }

@@ -1,6 +1,5 @@
 package com.hydra.skye.ward.service;
 
-import com.github.pagehelper.PageInfo;
 import com.hydra.skye.ward.model.Cargo;
 import com.hydra.skye.ward.model.PageBean;
 import com.hydra.skye.ward.model.condition.CargoQueryCondition;

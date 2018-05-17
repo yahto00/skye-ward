@@ -67,13 +67,13 @@ public class OrderController {
     @ResponseBody
     @ApiOperation(value = "条件查询订单", notes = "条件查询订单", response = Result.class)
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "customerName", value = "客户名称", dataType = "Long", required = false, paramType = "query"),
-            @ApiImplicitParam(name = "opsUserName", value = "操作人", dataType = "Long", required = false, paramType = "query"),
-            @ApiImplicitParam(name = "createAt", value = "创建时间", dataType = "Long", required = false, paramType = "query"),
-            @ApiImplicitParam(name = "endAt", value = "结束时间", dataType = "Long", required = false, paramType = "query"),
+            @ApiImplicitParam(name = "customerName", value = "客户名称", dataType = "String", required = false, paramType = "query"),
+            @ApiImplicitParam(name = "opsUserName", value = "操作人", dataType = "String", required = false, paramType = "query"),
+            @ApiImplicitParam(name = "createAt", value = "创建时间", dataType = "Date", required = false, paramType = "query"),
+            @ApiImplicitParam(name = "endAt", value = "结束时间", dataType = "Date", required = false, paramType = "query"),
     })
     public Result queryOrderByCondition(OrderQueryCondition condition, PageBean pageBean) {
-        List<OrderVo> orderVos = orderService.queryOrderByCondition(condition,pageBean);
-        return new Result().success().add("orderVos",orderVos);
+        List<OrderVo> orderVos = orderService.queryOrderByCondition(condition, pageBean);
+        return new Result().success().add("orderVos", orderVos);
     }
 }

@@ -19,6 +19,6 @@ public class CargoServiceTest {
 
     @Test
     public void queryConditionTest() {
-        System.out.println(cargoService.queryCargoByCondition(new CargoQueryCondition(),new PageBean()));
+        System.out.println(cargoService.queryCargoByCondition(new CargoQueryCondition(), new PageBean()));
     }
 }

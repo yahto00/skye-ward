@@ -50,7 +50,7 @@ public class OrderServiceImpl implements OrderService {
             orderItem.setItemArea(dto.getItemArea());
             orderItem.setItemCount(dto.getItemCount());
             orderItem.setOrderId(order.getId());
-            if (!cargoService.createOrder(dto)){
+            if (!cargoService.createOrder(dto)) {
                 throw new BusinessException("订单货物参数错误,请检查!");
             }
         }
