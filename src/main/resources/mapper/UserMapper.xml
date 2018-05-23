@@ -86,7 +86,7 @@
     </select>
     <select id="queryAllUser" resultType="com.hydra.skye.ward.model.User">
         select tu.id,tu.username,tu.login_name,tu.password
-        from tb_user
+        from tb_user tu
     </select>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
         select
